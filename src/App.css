@@ -1,0 +1,634 @@
+p {
+  color: var(--blueasd);
+} 
+
+.dark {
+  background-color: #171823;
+
+  .iconMenu {
+    background: rgb(28, 37, 52);
+  }
+
+  .icontop svg:nth-child(3) {
+    background: rgba(51, 59, 72, 1) !important;
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .sidebar {
+    background: rgb(28, 37, 52);
+  }
+
+  .sidebar input[type="search"] {
+    background: rgba(51, 59, 72, 1) !important;
+    background-image: url("../public/assets/img/search.svg") !important;
+    background-repeat: no-repeat !important;
+    background-position: 11px 9px !important;
+    border: none;
+  }
+
+
+  .section {
+    background: rgb(21, 27, 40);
+  }
+
+  .HeyThere *:not(button) {
+    color: white;
+  }
+
+  .subsplan {
+    background: rgba(44, 52, 68, 1);
+    color: white !important;
+  }
+
+  .subsplan h3 {
+    color: white !important;
+  }
+
+
+  .subsplan p {
+    color: rgba(165, 172, 186, 1) !important;
+  }
+
+  .HeyThere button {
+    border: none !important;
+  }
+
+
+  .event {
+    background: rgba(51, 59, 72, 1) !important;
+    border-left: 3px solid white;
+    color: white !important;
+  }
+
+  .event * {
+    color: white !important;
+  }
+
+  .HeyThere button:nth-child(1) {
+    background: rgba(44, 52, 68, 1) !important;
+    color: white;
+    border: none !important;
+  }
+
+  .revenue {
+    background: rgba(28, 37, 52, 1) !important;
+    color: white;
+    border: none !important;
+  }
+
+  .revenue * {
+    color: white;
+  }
+
+  .revenue span {
+    background: rgba(83, 144, 248, 1);
+    color: white !important;
+  }
+
+
+  .expenses {
+    background: rgba(28, 37, 52, 1) !important;
+    color: white;
+    border: none !important;
+  }
+
+  .expenses * {
+    color: white;
+  }
+
+  .expenses span {
+    background: rgba(240, 68, 56, 1);
+    color: white !important;
+  }
+
+  .expensesx {
+    background: rgba(28, 37, 52, 1) !important;
+    color: white;
+    border: none !important;
+  }
+
+  .expensesx span {
+    background: rgba(93, 194, 100, 1);
+    color: white !important;
+  }
+
+  svg {
+    stroke: white;
+  }
+
+  path {
+    stroke: white;
+  }
+
+  .expensesx * {
+    color: white;
+  }
+
+  tspan * {
+    color: white;
+  }
+
+  .data-item {
+    background: rgb(28, 37, 52) !important;
+  }
+
+  .advancedgraphics {
+    background: rgba(28, 37, 52, 1) !important;
+  }
+
+  .advancedgraphics * {
+    color: white !important;
+  }
+
+  .datas {
+    color: white !important;
+  }  
+  
+  .datasheader button:nth-child(1) {
+    background: rgba(44, 52, 68, 1) !important;
+    color: white;
+    border: none !important;
+  }
+
+  .data-item:nth-child(2) button:nth-child(1) {
+    background: rgba(44, 52, 68, 1) !important;
+    color: white;
+    border: none !important;
+  }
+
+  .welcome-btn button {
+    border: none !important;
+  }
+
+  .data-item :is(h5, span, h4) {
+    color: white;
+  }
+
+  .team-item svg {
+    stroke: white;
+  }
+
+  .done {
+    background: rgba(93, 194, 100, 1);
+    color: white;
+  }
+
+  .profilName p {
+
+    color: white;
+  }
+
+  .fail {
+    background: rgba(240, 68, 56, 1);
+    color: white;
+  }
+
+  .on {
+    background: rgba(44, 52, 68, 1);
+    color: rgba(67, 126, 247, 1);
+  }
+
+  .of {
+    background: rgba(44, 52, 68, 1);
+    color: white;
+
+  }
+
+  .datas span {
+    color: rgba(165, 172, 186, 1) !important;
+  }
+
+  .material-item path {
+    fill: white;
+  }
+
+  .HeyThere p {
+    
+    color: rgba(165, 172, 186, 1) !important;
+  }
+
+  .material-item:nth-child(3) path {
+    fill: none !important;
+  }
+
+  .material-item:nth-child(4) path {
+    fill: none !important;
+  }
+
+  .icontop svg:nth-child(1) path {
+    fill: white;
+  }
+
+  .logo path {
+    fill: white;
+  }
+
+  .offcanvas-header {
+    background: rgba(44, 52, 68, 1);
+
+  }
+
+  .offcanvas-body {
+    background: rgb(28, 37, 52);
+  }
+
+  .offcanvas-body * {
+    color: white;
+  }
+
+  .hamburgerHead svg:nth-child(1) path {
+    fill: white;
+  }
+  .hamburgerHead svg:nth-child(2) path {
+    fill: white;
+  }
+
+  .hamburgerHead svg:nth-child(8) path {
+    fill: white;
+  }
+  
+  
+  
+  .sidebar-menu input[type="search"] {
+    background: rgba(44, 52, 68, 1);
+    background-image: url("../public/assets/img/search.svg") !important;
+    background-repeat: no-repeat !important;
+    background-position: 11px 9px !important;
+    border: none;
+  }
+  
+  .offcanvas-body > .subsplan {
+    background: rgba(44, 52, 68, 1);
+    color: white !important;
+  }
+
+  .offcanvas-body > .subsplan h3 {
+    color: white !important;
+  }
+
+
+  .offcanvas-body > .subsplan p {
+    color: rgba(165, 172, 186, 1) !important;
+  }
+}
+
+
+p,
+h5,
+h5,
+h4,
+h6,
+h3,
+h2,
+h1 {
+  margin-bottom: 0;
+}
+
+.iconMenu {
+  width: 80px;
+}
+
+.sidebar {
+  width: 312px;
+}
+
+.section {
+  width: calc(100% - 392px);
+}
+
+.sidebar p {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(95, 109, 126, 1);
+}
+
+button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(95, 109, 126, 1);
+}
+
+input[type="search"] {
+  background-image: url("../public/assets/img/search.svg");
+  background-repeat: no-repeat;
+  background-position: 11px 9px;
+  border: 1px solid rgba(218, 224, 230, 1);
+  border-radius: 5px;
+  width: 256px;
+  margin-inline: auto;
+}
+
+.sidebar-menu div {
+  padding: 10px 28px;
+}
+
+.event {
+  background: rgb(243, 249, 254);
+  border-left: 3px solid rgba(67, 126, 247, 1);
+}
+
+.subsplan {
+  background: rgba(248, 249, 251, 1);
+}
+
+.subsplan h3 {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(39, 45, 55, 1);
+}
+
+.subsplan p {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(95, 109, 126, 1);
+}
+
+.subsplan h6 {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: left;
+  color: rgba(67, 126, 247, 1);
+}
+
+.section {
+  background: rgb(250, 251, 252);
+}
+
+.map {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(95, 109, 126, 1);
+}
+
+.welcome h3 {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: rgba(39, 45, 55, 1);
+}
+
+.HeyThere button {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: left;
+  color: rgba(39, 45, 55, 1);
+}
+
+.welcome p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(95, 109, 126, 1);
+}
+
+.montlyh h3 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(39, 45, 55, 1);
+}
+
+.montlyh p {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(95, 109, 126, 1);
+}
+
+
+.revenue {
+  width: 314.67px;
+}
+
+.revenue span {
+  background: rgba(245, 250, 255, 1);
+  padding: 2px 8px;
+}
+
+.expenses {
+  width: 314.67px;
+}
+
+.expenses span {
+  background: rgba(255, 242, 240, 1);
+  padding: 2px 8px;
+}
+
+.expensesx {
+  width: 314.67px;
+}
+
+.expensesx span {
+  background: rgba(240, 250, 240, 1);
+  padding: 2px 8px;
+}
+
+.advanceheader h4 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(39, 45, 55, 1);
+}
+
+.datagraph h6 {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(95, 109, 126, 1);
+}
+
+
+.chartmb h4 {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(95, 109, 126, 1);
+
+}
+
+.chartmb h2 {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: rgba(39, 45, 55, 1);
+
+}
+
+
+.data-item h4 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(39, 45, 55, 1);
+}
+
+.data-item {
+  width: 312px;
+}
+
+.team-item h5 {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(39, 45, 55, 1);
+}
+
+.team-item span {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(95, 109, 126, 1);
+}
+
+.on {
+  background: rgba(245, 250, 255, 1);
+}
+
+.of {
+  background: rgba(247, 247, 248, 1);
+}
+
+
+.material-item h5 {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(39, 45, 55, 1);
+}
+
+.material-item span {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(95, 109, 126, 1);
+}
+
+
+.recent-item h5 {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(39, 45, 55, 1);
+}
+
+.recent-item span {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: left;
+  color: rgba(95, 109, 126, 1);
+}
+
+.done {
+  background: rgba(240, 250, 240, 1);
+  color: rgba(45, 138, 57, 1);
+}
+
+.fail {
+  background: rgba(255, 242, 240, 1);
+  color: rgba(226, 52, 29, 1);
+}
+
+@media (width <=768px) {
+  .section {
+    width: 100%;
+  }
+
+
+  .HeyThere {
+    width: 100%;
+  }
+  .HeyThere button {
+    width: 125.5px;
+    text-align: center;
+  }
+
+  .HeyThere button:last-child {
+    width: 40px;
+    text-align: center;
+  }
+
+  .welcome-btn {
+    width: 100%;
+  }
+
+  .welcome-btn button {
+    width: 125.5px;
+    text-align: center;
+  }
+
+  .welcome-btn button:last-child {
+    width: 40px;
+    text-align: center;
+  }
+
+  .revenue {
+    width: 90%;
+  }
+
+  .expenses {
+    width: 90%;
+  }
+
+  .expensesx {
+    width: 90%;
+  }
+
+
+
+  .data-item {
+    width: 90%;
+  }
+
+}
