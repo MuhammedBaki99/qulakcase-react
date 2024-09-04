@@ -84,7 +84,7 @@ function Hamburger({ setTheme, theme }) {
         </button></div>
 
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header d-flex align-items-center justify-content-between gap-4 h-0 p-0 "></div>
+        <div class="offcanvas-header d-flex align-items-center justify-content-between gap-4 h-0 p-0 ">asd</div>
         <div class="offcanvas-body">
           <div className="sidebar-menu d-flex flex-column gap-4 m-0 p-0">
             <button className='d-flex align-items-center gap-2'>
