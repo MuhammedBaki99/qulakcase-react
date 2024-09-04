@@ -7,15 +7,7 @@ p {
 
   .iconMenu {
     background: rgb(28, 37, 52);
-  }
-
-  .icontop svg:nth-child(3) {
-    background: rgba(51, 59, 72, 1) !important;
-    width: 48px;
-    height: 48px;
-    padding: 12px;
-    border-radius: 10px;
-  }
+  } 
 
   .sidebar {
     background: rgb(28, 37, 52);
@@ -28,6 +20,7 @@ p {
     background-position: 11px 9px !important;
     border: none;
   }
+ 
 
 
   .section {
@@ -297,7 +290,7 @@ h1 {
 }
 
 .iconMenu {
-  width: 80px;
+  width: 80px !important;
   height: 910px !important;
 }
 
