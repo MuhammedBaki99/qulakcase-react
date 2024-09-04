@@ -5,14 +5,36 @@ import './App.css'
 
 function App() {
 
+  const [sidewidth, setSideWidth] = useState(0);
+  const [plan, setPlan] = useState(0);
+
+  const [theme, setTheme] = useState(() => localStorage.getItem("theme") === "light" ? "light" : "dark");
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.body.classList.add("dark")
+    } else {
+      document.body.classList.remove("dark")
+    }
+  }, [theme]);
   return (
     <>
       <div className="main d-flex flex-md-row flex-column">
-        <Hamburger />
-        <IconMenu />
-        <Sidebar />
+        <Hamburger theme={theme} setTheme={setTheme} />
+        <IconMenu sidewidth={sidewidth} setSideWidth={setSideWidth} theme={theme} setTheme={setTheme} />
+        <Sidebar sidewidth={sidewidth} setSideWidth={setSideWidth} setPlan={setPlan} plan={plan} />
 
-        <div className="section d-flex flex-column  col-md-9 p-4 gap-4 ">
+        <div className="section d-flex flex-column  col-md-9 p-4 gap-4"
+          style={{
+            width: `${sidewidth === 0 ? "calc(100% - 80px)" : "calc(100% - 392px)"}`,
+            transition: "all 1s"
+          }}
+
+        >
           <HeyThere />
           <MontlyhGrowth />
           <AdvancedGraphics />
@@ -23,17 +45,8 @@ function App() {
   )
 }
 
-function Hamburger() {
+function Hamburger({ setTheme, theme }) {
 
-  const [theme, setTheme] = useState('light');
-
-  useEffect(() => {
-    if (theme === "dark") {
-      document.body.classList.add("dark")
-    } else {
-      document.body.classList.remove("dark")
-    }
-  }, [theme])
 
   return (
 
@@ -55,164 +68,177 @@ function Hamburger() {
           <path d="M5.68205 20.8821L19.4051 12.9642V17.6L9.70256 23.2L5.68205 20.8821Z" fill="#2E343F" />
         </svg>
       </div>
-
-      <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g clip-path="url(#clip0_5872_10224)">
-            <path d="M6 8H18M6 12H18M6 16H18" stroke="#272D37" stroke-width="2" stroke-linecap="round" />
-          </g>
-          <defs>
-            <clipPath id="clip0_5872_10224">
-              <rect width="24" height="24" rx="5" fill="white" />
-            </clipPath>
-          </defs>
-        </svg>
-      </button>
+      <div className="buttonList d-flex align-items-center">
+        <button className='darkmode bg-dark p-1 rounded-5' onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>{theme === "dark" ? <img src={"../assets/img/sun.png"} /> : <img src={"../assets/img/moon.png"} />}</button>
+        <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_5872_10224)">
+              <path d="M6 8H18M6 12H18M6 16H18" stroke="#272D37" stroke-width="2" stroke-linecap="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_5872_10224">
+                <rect width="24" height="24" rx="5" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+        </button></div>
 
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header d-flex flex-column align-items-start gap-4 ">
-          <div className="hamburgerHead d-flex gap-4 align-items-center">
-
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M25.5631 8.21429L7.00537 18.9286V12.5L19.9999 5L25.5631 8.21429Z" fill="#221F20" />
-              <path d="M32.9944 12.5V16.2088L10.2197 29.3544L7.00537 27.5V24.011L29.9587 10.7555L32.9944 12.5Z" fill="#221F20" />
-              <path d="M14.6153 31.8956L32.9944 21.2912V27.5L19.9999 35L14.6153 31.8956Z" fill="#221F20" />
-            </svg>
-
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_5832_103247)">
-                <path d="M22.2929 23.7071C22.6834 24.0976 23.3166 24.0976 23.7071 23.7071C24.0976 23.3166 24.0976 22.6834 23.7071 22.2929L22.2929 23.7071ZM18.1176 10.0588C18.1176 14.5096 14.5096 18.1176 10.0588 18.1176V20.1176C15.6142 20.1176 20.1176 15.6142 20.1176 10.0588H18.1176ZM10.0588 18.1176C5.60806 18.1176 2 14.5096 2 10.0588H0C0 15.6142 4.50349 20.1176 10.0588 20.1176V18.1176ZM2 10.0588C2 5.60806 5.60806 2 10.0588 2V0C4.50349 0 0 4.50349 0 10.0588H2ZM10.0588 2C14.5096 2 18.1176 5.60806 18.1176 10.0588H20.1176C20.1176 4.50349 15.6142 0 10.0588 0V2ZM15.8223 17.2365L22.2929 23.7071L23.7071 22.2929L17.2365 15.8223L15.8223 17.2365Z" fill="#5F6D7E" />
-              </g>
-              <defs>
-                <clipPath id="clip0_5832_103247">
-                  <rect width="24" height="24" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
-
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_5188_39445)">
-                <path d="M9 1L15 1C17.8003 1 19.2004 1 20.27 1.54497C21.2108 2.02433 21.9757 2.78924 22.455 3.73005C23 4.79961 23 6.19974 23 9V15C23 17.8003 23 19.2004 22.455 20.27C21.9757 21.2108 21.2108 21.9757 20.27 22.455C19.2004 23 17.8003 23 15 23H9M9 1C6.19974 1 4.79961 1 3.73005 1.54497C2.78924 2.02433 2.02433 2.78924 1.54497 3.73005C1 4.79961 1 6.19974 1 9L1 15C1 17.8003 1 19.2004 1.54497 20.27C2.02433 21.2108 2.78924 21.9757 3.73005 22.455C4.79961 23 6.19974 23 9 23M9 1L9 23M9 12L24 12" stroke="#437EF7" stroke-width="2" stroke-linecap="round" />
-              </g>
-              <defs>
-                <clipPath id="clip0_5188_39445">
-                  <rect width="24" height="24" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
-
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 10H21M9 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.0799 3 8.2V17.8C3 18.9201 3 19.4802 3.21799 19.908C3.40973 20.2843 3.71569 20.5903 4.09202 20.782C4.51984 21 5.0799 21 6.2 21H17.8C18.9201 21 19.4802 21 19.908 20.782C20.2843 20.5903 20.5903 20.2843 20.782 19.908C21 19.4802 21 18.9201 21 17.8V8.2C21 7.0799 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H15M9 5H15M9 5V4.5C9 3.67157 8.32843 3 7.5 3C6.67157 3 6 3.67157 6 4.5V5M15 5V4.5C15 3.67157 15.6716 3 16.5 3C17.3284 3 18 3.67157 18 4.5V5" stroke="#5F6D7E" stroke-width="2" stroke-linecap="round" />
-            </svg>
-
-
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 14C2 12.8954 2.89543 12 4 12C5.10457 12 6 12.8954 6 14V18C6 19.1046 5.10457 20 4 20C2.89543 20 2 19.1046 2 18V14Z" stroke="#5F6D7E" stroke-width="2" />
-              <path d="M10 6C10 4.89543 10.8954 4 12 4C13.1046 4 14 4.89543 14 6V18C14 19.1046 13.1046 20 12 20C10.8954 20 10 19.1046 10 18V6Z" stroke="#5F6D7E" stroke-width="2" />
-              <path d="M18 10C18 8.89543 18.8954 8 20 8C21.1046 8 22 8.89543 22 10V18C22 19.1046 21.1046 20 20 20C18.8954 20 18 19.1046 18 18V10Z" stroke="#5F6D7E" stroke-width="2" />
-            </svg>
-            <button className='darkmode bg-dark p-2 rounded-5' onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>{theme === "dark" ? <img src={"../assets/img/sun.png"} /> : <img src={"../assets/img/moon.png"} />}</button>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9.00033 3.7583C9.00033 2.78722 9.78755 2 10.7586 2H13.242C14.2131 2 15.0003 2.78722 15.0003 3.75831C15.0003 5.11186 16.4656 5.95781 17.6378 5.28104C18.4788 4.79548 19.5542 5.08362 20.0398 5.92462L21.2814 8.07525C21.767 8.91625 21.4788 9.99162 20.6378 10.4772C19.4656 11.154 19.4656 12.8459 20.6378 13.5227C21.4788 14.0082 21.767 15.0836 21.2814 15.9246L20.0398 18.0752C19.5542 18.9162 18.4788 19.2044 17.6378 18.7188C16.4656 18.0421 15.0003 18.8881 15.0003 20.2416C15.0003 21.2127 14.2131 22 13.242 22H10.7587C9.78757 22 9.00033 21.2127 9.00033 20.2416C9.00033 18.8881 7.53506 18.0421 6.36285 18.7188C5.52186 19.2044 4.44648 18.9162 3.96094 18.0753L2.71926 15.9246C2.23371 15.0836 2.52186 14.0082 3.36286 13.5227C4.53508 12.8459 4.53508 11.154 3.36286 10.4772C2.52186 9.99162 2.23371 8.91624 2.71926 8.07525L3.96094 5.9246C4.44649 5.08361 5.52187 4.79547 6.36286 5.28102C7.53506 5.95779 9.00033 5.11184 9.00033 3.7583Z" stroke="#5F6D7E" stroke-width="2" />
-              <path d="M16.0003 12C16.0003 14.2091 14.2095 16 12.0003 16C9.79119 16 8.00033 14.2091 8.00033 12C8.00033 9.79086 9.79119 8 12.0003 8C14.2095 8 16.0003 9.79086 16.0003 12Z" stroke="#5F6D7E" stroke-width="2" />
-            </svg>
-
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6.99985 7C6.99985 7.55228 7.44756 8 7.99985 8C8.55213 8 8.99985 7.55228 8.99985 7H6.99985ZM8.99985 17C8.99985 16.4477 8.55213 16 7.99985 16C7.44756 16 6.99985 16.4477 6.99985 17H8.99985ZM9.09187 21.782L9.54586 20.891L9.54586 20.891L9.09187 21.782ZM8.21783 20.908L7.32683 21.362H7.32683L8.21783 20.908ZM19.7819 20.908L20.6729 21.362L19.7819 20.908ZM18.9078 21.782L18.4538 20.891L18.4538 20.891L18.9078 21.782ZM18.9078 2.21799L18.4538 3.10899V3.10899L18.9078 2.21799ZM19.7819 3.09202L18.8909 3.54601V3.54601L19.7819 3.09202ZM8.21783 3.09202L7.32683 2.63803V2.63803L8.21783 3.09202ZM9.09187 2.21799L8.63788 1.32698V1.32698L9.09187 2.21799ZM2.99985 11C2.44756 11 1.99985 11.4477 1.99985 12C1.99985 12.5523 2.44756 13 2.99985 13L2.99985 11ZM13.9998 13C14.5521 13 14.9998 12.5523 14.9998 12C14.9998 11.4477 14.5521 11 13.9998 11V13ZM5.70695 9.70711C6.09748 9.31658 6.09748 8.68342 5.70695 8.29289C5.31643 7.90237 4.68326 7.90237 4.29274 8.29289L5.70695 9.70711ZM3.13122 10.8686L2.42411 10.1615H2.42411L3.13122 10.8686ZM3.13122 13.1314L2.42411 13.8385L2.42411 13.8385L3.13122 13.1314ZM4.29274 15.7071C4.68327 16.0976 5.31643 16.0976 5.70696 15.7071C6.09748 15.3166 6.09748 14.6834 5.70696 14.2929L4.29274 15.7071ZM2.46301 11.691L3.41406 12L2.46301 11.691ZM2.46301 12.309L3.41406 12L2.46301 12.309ZM8.99985 7V5.2H6.99985V7H8.99985ZM11.1998 3H16.7998V1H11.1998V3ZM18.9998 5.2V18.8H20.9998V5.2H18.9998ZM16.7998 21H11.1998V23H16.7998V21ZM8.99985 18.8V17H6.99985V18.8H8.99985ZM11.1998 21C10.6233 21 10.251 20.9992 9.96768 20.9761C9.69602 20.9539 9.5953 20.9162 9.54586 20.891L8.63788 22.673C9.01626 22.8658 9.40947 22.9371 9.80482 22.9694C10.1885 23.0008 10.6563 23 11.1998 23V21ZM6.99985 18.8C6.99985 19.3436 6.99907 19.8114 7.03042 20.195C7.06272 20.5904 7.13403 20.9836 7.32683 21.362L9.10884 20.454C9.08365 20.4045 9.04597 20.3038 9.02377 20.0322C9.00063 19.7488 8.99985 19.3766 8.99985 18.8H6.99985ZM9.54586 20.891C9.3577 20.7951 9.20471 20.6422 9.10884 20.454L7.32683 21.362C7.61445 21.9265 8.07339 22.3854 8.63788 22.673L9.54586 20.891ZM18.9998 18.8C18.9998 19.3766 18.9991 19.7488 18.9759 20.0322C18.9537 20.3038 18.916 20.4045 18.8909 20.454L20.6729 21.362C20.8657 20.9836 20.937 20.5904 20.9693 20.195C21.0006 19.8114 20.9998 19.3436 20.9998 18.8H18.9998ZM16.7998 23C17.3434 23 17.8112 23.0008 18.1949 22.9694C18.5902 22.9371 18.9834 22.8658 19.3618 22.673L18.4538 20.891C18.4044 20.9162 18.3037 20.9539 18.032 20.9761C17.7487 20.9992 17.3764 21 16.7998 21V23ZM18.8909 20.454C18.795 20.6422 18.642 20.7951 18.4538 20.891L19.3618 22.673C19.9263 22.3854 20.3852 21.9265 20.6729 21.362L18.8909 20.454ZM16.7998 3C17.3764 3 17.7487 3.00078 18.032 3.02393C18.3037 3.04612 18.4044 3.0838 18.4538 3.10899L19.3618 1.32698C18.9834 1.13419 18.5902 1.06287 18.1949 1.03057C17.8112 0.999222 17.3434 1 16.7998 1V3ZM20.9998 5.2C20.9998 4.65645 21.0006 4.18864 20.9693 3.80497C20.937 3.40963 20.8657 3.01641 20.6729 2.63803L18.8909 3.54601C18.916 3.59545 18.9537 3.69617 18.9759 3.96784C18.9991 4.25117 18.9998 4.62345 18.9998 5.2H20.9998ZM18.4538 3.10899C18.642 3.20487 18.795 3.35785 18.8909 3.54601L20.6729 2.63803C20.3852 2.07354 19.9263 1.6146 19.3618 1.32698L18.4538 3.10899ZM8.99985 5.2C8.99985 4.62345 9.00063 4.25117 9.02377 3.96784C9.04597 3.69617 9.08365 3.59545 9.10884 3.54601L7.32683 2.63803C7.13403 3.01641 7.06272 3.40963 7.03042 3.80497C6.99907 4.18864 6.99985 4.65645 6.99985 5.2H8.99985ZM11.1998 1C10.6563 1 10.1885 0.999222 9.80482 1.03057C9.40947 1.06287 9.01626 1.13419 8.63788 1.32698L9.54586 3.10899C9.5953 3.0838 9.69602 3.04612 9.96768 3.02393C10.251 3.00078 10.6233 3 11.1998 3V1ZM9.10884 3.54601C9.20471 3.35785 9.3577 3.20487 9.54586 3.10899L8.63788 1.32698C8.07339 1.6146 7.61445 2.07354 7.32683 2.63803L9.10884 3.54601ZM2.99985 13L13.9998 13V11L2.99985 11L2.99985 13ZM4.29274 8.29289L2.42411 10.1615L3.83833 11.5757L5.70695 9.70711L4.29274 8.29289ZM2.42411 13.8385L4.29274 15.7071L5.70696 14.2929L3.83832 12.4243L2.42411 13.8385ZM2.42411 10.1615C2.23777 10.3479 2.05494 10.5296 1.91409 10.6955C1.76565 10.8704 1.60608 11.0922 1.51195 11.382L3.41406 12C3.39412 12.0614 3.37064 12.0701 3.43877 11.9899C3.51447 11.9007 3.62865 11.7854 3.83833 11.5757L2.42411 10.1615ZM3.83833 12.4243C3.62866 12.2146 3.51447 12.0993 3.43877 12.0101C3.37064 11.9299 3.39412 11.9386 3.41406 12L1.51195 12.618C1.60608 12.9078 1.76566 13.1296 1.91409 13.3045C2.05494 13.4704 2.23777 13.6521 2.42411 13.8385L3.83833 12.4243ZM1.51195 11.382C1.38143 11.7837 1.38143 12.2163 1.51195 12.618L3.41406 12V12L1.51195 11.382Z" fill="#5F6D7E" />
-            </svg>
-
-          </div>
-
-          <button type="button" class="btn-close position-absolute top-0 end-0 p-4" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
+        <div class="offcanvas-header d-flex align-items-center justify-content-between gap-4 h-0 p-0 "></div>
         <div class="offcanvas-body">
-
-
-          <div className="sidebar-menu d-flex flex-column gap-4">
-            <button className='d-flex align-items-center gap-2 mt-3 py-2 px-4  '>
-              <img src="../assets/img/Button.png" />
-              Lookscout Dashboard
-            </button>
-            <input type="search" className='p-2 ps-5 mb-3' placeholder='Search here...' />
-
-
-            <div className="general d-flex align-items-center gap-2   ">
-              <img src="../assets/img/horizontal.png" alt="" />
-              <p className='mb-0'>General</p>
-            </div>
-
-
-
-            <div className="messages d-flex align-items-center gap-2   ">
-              <img src="../assets/img/mail.png" alt="" />
-              <p className='mb-0'>Messages</p>
-            </div>
-
-            <div className="notifications d-flex align-items-center gap-2   ">
-              <img src="../assets/img/alarm.png" alt="" />
-              <p className='mb-0'>Notifications</p>
-            </div>
-
-            <div className="users d-flex align-items-center gap-2 ">
-              <img src="../assets/img/user.png" alt="" />
-              <p className='mb-0'>Users</p>
-            </div>
-
-            <div className="event d-flex align-items-center gap-2   ">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12.9917 7.3377L11.7886 5.24344C11.4376 4.63238 10.557 4.62946 10.202 5.23817L8.91995 7.43592C8.65571 7.8889 8.21013 8.20704 7.6959 8.30988L6.11583 8.6259C5.40982 8.7671 5.13472 9.62976 5.62864 10.1536L6.75996 11.3535C7.18155 11.8006 7.35106 12.4293 7.21142 13.0278L6.67549 15.3246C6.49205 16.1108 7.34097 16.7331 8.0355 16.3215L10.0652 15.1187C10.6415 14.7772 11.3582 14.7772 11.9345 15.1187L13.9642 16.3215C14.6587 16.7331 15.5076 16.1108 15.3242 15.3246L14.7804 12.9943C14.6451 12.4143 14.7999 11.8048 15.1956 11.3597L16.3548 10.0556C16.8251 9.52645 16.5436 8.68656 15.8494 8.54771L14.2218 8.2222C13.7034 8.11852 13.255 7.7961 12.9917 7.3377Z" stroke="rgba(67, 126, 247, 1)" stroke-width="1.67" />
-                <path d="M21.0832 11C21.0832 16.5689 16.5687 21.0834 10.9998 21.0834C5.43097 21.0834 0.916504 16.5689 0.916504 11C0.916504 5.43115 5.43097 0.916687 10.9998 0.916687C16.5687 0.916687 21.0832 5.43115 21.0832 11Z" stroke="rgba(67, 126, 247, 1)" stroke-width="1.67" />
-              </svg>
-              <p className='mb-0'>Event & Logs</p>
-            </div>
-
-            <div className="organization d-flex align-items-center gap-2   ">
-              <img src="../assets/img/organization.png" alt="" />
-              <p className='mb-0'>Organization</p>
-            </div>
-
-            <div className="teams d-flex align-items-center gap-2   ">
-              <img src="../assets/img/teams.png" alt="" />
-              <p className='mb-0'>Teams</p>
-            </div>
-
-          </div>
-
-
-          <div className="sidebar-profil d-flex flex-column gap-3 m-3">
-            <div className="profil d-flex align-items-center justify-content-between">
+          <div className="sidebar-menu d-flex flex-column gap-4 m-0 p-0">
+            <button className='d-flex align-items-center gap-2'>
+              <img src="../assets/img/Button.png" data-bs-dismiss="offcanvas" aria-label="Close" />
               <div className="profilName d-flex align-items-center gap-2">
                 <img src="../assets/img/brian.png" />
                 <p className='m-0'>Brian Ford</p>
               </div>
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g filter="url(#filter0_d_5832_96935)">
-                  <path d="M13.6248 12.6249H14.3748M13.6248 13.3749H14.3748M6.62476 12.6249H7.37476M6.62476 13.3749H7.37476M20.6248 12.6249H21.3748M20.6248 13.3749H21.3748M15 13C15 13.5523 14.5523 14 14 14C13.4477 14 13 13.5523 13 13C13 12.4477 13.4477 12 14 12C14.5523 12 15 12.4477 15 13ZM8 13C8 13.5523 7.55229 14 7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55229 12 8 12.4477 8 13ZM22 13C22 13.5523 21.5523 14 21 14C20.4477 14 20 13.5523 20 13C20 12.4477 20.4477 12 21 12C21.5523 12 22 12.4477 22 13Z" stroke="#5F6D7E" stroke-width="2" stroke-linecap="round" />
-                </g>
-                <defs>
-                  <filter id="filter0_d_5832_96935" x="0" y="0" width="28" height="28" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                    <feOffset dy="1" />
-                    <feGaussianBlur stdDeviation="1" />
-                    <feComposite in2="hardAlpha" operator="out" />
-                    <feColorMatrix type="matrix" values="0 0 0 0 0.0627451 0 0 0 0 0.0941176 0 0 0 0 0.156863 0 0 0 0.04 0" />
-                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_5832_96935" />
-                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_5832_96935" result="shape" />
-                  </filter>
-                </defs>
-              </svg>
-            </div>
-            <div className="subsplan p-3 rounded-3">
-              <div className="grafikX d-flex align-items-start justify-content-between">
-                <img src="../assets/img/Progresscircle.png" />
-                <img src="../assets/img/closecross.png" />
+            </button>
+
+
+            <div class="accordion bg-none p-0" id="accordionExample">
+              <div class="accordion-item border border-0 p-0">
+                <h2 class="accordion-header border border-0">
+                  <button class="accordion-button d-flex gap-3 bg-transparent border border-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <img src="../assets/img/horizontal.png" alt="" />
+                    <p className='mb-0'>General</p>
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show p-0" data-bs-parent="#accordionExample">
+                  <div class="accordion-body p-0">
+
+                    <div className="general d-flex align-items-center gap-2">
+                      <img src="../assets/img/horizontal.png" alt="" />
+                      <p className='mb-0'>General</p>
+                    </div>
+                    <div className="messages d-flex justify-content-between align-items-center gap-2   ">
+                      <p className='d-flex p-0 gap-2'>
+                        <img src="../assets/img/mail.png" alt="" />
+                        <p className='mb-0'>Messages</p>
+                      </p>
+                      <span className='bg-primary text-white px-2 rounded-5'>6</span>
+                    </div>
+
+                    <div className="notifications d-flex align-items-center gap-2   ">
+                      <img src="../assets/img/alarm.png" alt="" />
+                      <p className='mb-0'>Notifications</p>
+                    </div>
+
+                    <div className="users d-flex align-items-center gap-2 ">
+                      <img src="../assets/img/user.png" alt="" />
+                      <p className='mb-0'>Users</p>
+                    </div>
+
+                    <div className="event d-flex align-items-center gap-2  ">
+                      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.9917 7.3377L11.7886 5.24344C11.4376 4.63238 10.557 4.62946 10.202 5.23817L8.91995 7.43592C8.65571 7.8889 8.21013 8.20704 7.6959 8.30988L6.11583 8.6259C5.40982 8.7671 5.13472 9.62976 5.62864 10.1536L6.75996 11.3535C7.18155 11.8006 7.35106 12.4293 7.21142 13.0278L6.67549 15.3246C6.49205 16.1108 7.34097 16.7331 8.0355 16.3215L10.0652 15.1187C10.6415 14.7772 11.3582 14.7772 11.9345 15.1187L13.9642 16.3215C14.6587 16.7331 15.5076 16.1108 15.3242 15.3246L14.7804 12.9943C14.6451 12.4143 14.7999 11.8048 15.1956 11.3597L16.3548 10.0556C16.8251 9.52645 16.5436 8.68656 15.8494 8.54771L14.2218 8.2222C13.7034 8.11852 13.255 7.7961 12.9917 7.3377Z" stroke="rgba(67, 126, 247, 1)" stroke-width="1.67" />
+                        <path d="M21.0832 11C21.0832 16.5689 16.5687 21.0834 10.9998 21.0834C5.43097 21.0834 0.916504 16.5689 0.916504 11C0.916504 5.43115 5.43097 0.916687 10.9998 0.916687C16.5687 0.916687 21.0832 5.43115 21.0832 11Z" stroke="rgba(67, 126, 247, 1)" stroke-width="1.67" />
+                      </svg>
+
+                      <p className='mb-0 text-primary'>Event & Logs</p>
+                    </div>
+
+                    <div className="organization d-flex align-items-center gap-2   ">
+                      <img src="../assets/img/organization.png" alt="" />
+                      <p className='mb-0'>Organization</p>
+                    </div>
+
+                    <div className="teams d-flex align-items-center gap-2   ">
+                      <img src="../assets/img/teams.png" alt="" />
+                      <p className='mb-0'>Teams</p>
+                    </div>                  </div>
+                </div>
               </div>
-              <h3 className='mt-1'>Subscription Plan</h3>
-              <p>Your Subscription plan will expire soon please upgrade!</p>
-              <h6>Upgrade</h6>
+              <div class="accordion-item border border-0 p-0">
+                <h2 class="accordion-header border border-0">
+                  <button class="accordion-button collapsed  d-flex gap-3 bg-transparent border border-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3 10H21M9 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.0799 3 8.2V17.8C3 18.9201 3 19.4802 3.21799 19.908C3.40973 20.2843 3.71569 20.5903 4.09202 20.782C4.51984 21 5.0799 21 6.2 21H17.8C18.9201 21 19.4802 21 19.908 20.782C20.2843 20.5903 20.5903 20.2843 20.782 19.908C21 19.4802 21 18.9201 21 17.8V8.2C21 7.0799 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H15M9 5H15M9 5V4.5C9 3.67157 8.32843 3 7.5 3C6.67157 3 6 3.67157 6 4.5V5M15 5V4.5C15 3.67157 15.6716 3 16.5 3C17.3284 3 18 3.67157 18 4.5V5" stroke="#5F6D7E" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                    <p className='mb-0'>Date</p>
+                  </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse p-0" data-bs-parent="#accordionExample">
+                  <div class="accordion-body p-0">
+
+                    <div>
+                      <p>Aylık Görünüm</p>
+                    </div>
+                    <div>
+                      <p>Haftalık Görünüm</p>
+                    </div>
+                    <div>
+                      <p>Günlük Görünüm</p>
+                    </div>
+                    <div>
+                      <p>Etkinlikler</p>
+                    </div>                  </div>
+                </div>
+              </div>
+              <div class="accordion-item border border-0 p-0">
+                <h2 class="accordion-header border border-0">
+                  <button class="accordion-button collapsed  d-flex gap-3 bg-transparent border border-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M2 14C2 12.8954 2.89543 12 4 12C5.10457 12 6 12.8954 6 14V18C6 19.1046 5.10457 20 4 20C2.89543 20 2 19.1046 2 18V14Z" stroke="#5F6D7E" stroke-width="2" />
+                      <path d="M10 6C10 4.89543 10.8954 4 12 4C13.1046 4 14 4.89543 14 6V18C14 19.1046 13.1046 20 12 20C10.8954 20 10 19.1046 10 18V6Z" stroke="#5F6D7E" stroke-width="2" />
+                      <path d="M18 10C18 8.89543 18.8954 8 20 8C21.1046 8 22 8.89543 22 10V18C22 19.1046 21.1046 20 20 20C18.8954 20 18 19.1046 18 18V10Z" stroke="#5F6D7E" stroke-width="2" />
+                    </svg>
+
+                    <p className='mb-0'>Graphics</p>
+
+                  </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse p-0" data-bs-parent="#accordionExample">
+                  <div class="accordion-body p-0">
+                    <div>
+                      <p>Bar Charts</p>
+                    </div>
+                    <div>
+                      <p>Sales Data</p>
+                    </div>
+                    <div>
+                      <p>Performance Metrics</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item border border-0 p-0">
+                <h2 class="accordion-header border border-0">
+                  <button class="accordion-button collapsed  d-flex gap-3 bg-transparent border border-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9.00033 3.7583C9.00033 2.78722 9.78755 2 10.7586 2H13.242C14.2131 2 15.0003 2.78722 15.0003 3.75831C15.0003 5.11186 16.4656 5.95781 17.6378 5.28104C18.4788 4.79548 19.5542 5.08362 20.0398 5.92462L21.2814 8.07525C21.767 8.91625 21.4788 9.99162 20.6378 10.4772C19.4656 11.154 19.4656 12.8459 20.6378 13.5227C21.4788 14.0082 21.767 15.0836 21.2814 15.9246L20.0398 18.0752C19.5542 18.9162 18.4788 19.2044 17.6378 18.7188C16.4656 18.0421 15.0003 18.8881 15.0003 20.2416C15.0003 21.2127 14.2131 22 13.242 22H10.7587C9.78757 22 9.00033 21.2127 9.00033 20.2416C9.00033 18.8881 7.53506 18.0421 6.36285 18.7188C5.52186 19.2044 4.44648 18.9162 3.96094 18.0753L2.71926 15.9246C2.23371 15.0836 2.52186 14.0082 3.36286 13.5227C4.53508 12.8459 4.53508 11.154 3.36286 10.4772C2.52186 9.99162 2.23371 8.91624 2.71926 8.07525L3.96094 5.9246C4.44649 5.08361 5.52187 4.79547 6.36286 5.28102C7.53506 5.95779 9.00033 5.11184 9.00033 3.7583Z" stroke="#5F6D7E" stroke-width="2" />
+                      <path d="M16.0003 12C16.0003 14.2091 14.2095 16 12.0003 16C9.79119 16 8.00033 14.2091 8.00033 12C8.00033 9.79086 9.79119 8 12.0003 8C14.2095 8 16.0003 9.79086 16.0003 12Z" stroke="#5F6D7E" stroke-width="2" />
+                    </svg>
+                    <p className='mb-0'>Settings</p>
+                  </button>
+                </h2> 
+              </div>
+              <div class="accordion-item border border-0 p-0">
+                <h2 class="accordion-header border border-0">
+                  <button class="accordion-button collapsed  d-flex gap-3 bg-transparent border border-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+
+
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6.99985 7C6.99985 7.55228 7.44756 8 7.99985 8C8.55213 8 8.99985 7.55228 8.99985 7H6.99985ZM8.99985 17C8.99985 16.4477 8.55213 16 7.99985 16C7.44756 16 6.99985 16.4477 6.99985 17H8.99985ZM9.09187 21.782L9.54586 20.891L9.54586 20.891L9.09187 21.782ZM8.21783 20.908L7.32683 21.362H7.32683L8.21783 20.908ZM19.7819 20.908L20.6729 21.362L19.7819 20.908ZM18.9078 21.782L18.4538 20.891L18.4538 20.891L18.9078 21.782ZM18.9078 2.21799L18.4538 3.10899V3.10899L18.9078 2.21799ZM19.7819 3.09202L18.8909 3.54601V3.54601L19.7819 3.09202ZM8.21783 3.09202L7.32683 2.63803V2.63803L8.21783 3.09202ZM9.09187 2.21799L8.63788 1.32698V1.32698L9.09187 2.21799ZM2.99985 11C2.44756 11 1.99985 11.4477 1.99985 12C1.99985 12.5523 2.44756 13 2.99985 13L2.99985 11ZM13.9998 13C14.5521 13 14.9998 12.5523 14.9998 12C14.9998 11.4477 14.5521 11 13.9998 11V13ZM5.70695 9.70711C6.09748 9.31658 6.09748 8.68342 5.70695 8.29289C5.31643 7.90237 4.68326 7.90237 4.29274 8.29289L5.70695 9.70711ZM3.13122 10.8686L2.42411 10.1615H2.42411L3.13122 10.8686ZM3.13122 13.1314L2.42411 13.8385L2.42411 13.8385L3.13122 13.1314ZM4.29274 15.7071C4.68327 16.0976 5.31643 16.0976 5.70696 15.7071C6.09748 15.3166 6.09748 14.6834 5.70696 14.2929L4.29274 15.7071ZM2.46301 11.691L3.41406 12L2.46301 11.691ZM2.46301 12.309L3.41406 12L2.46301 12.309ZM8.99985 7V5.2H6.99985V7H8.99985ZM11.1998 3H16.7998V1H11.1998V3ZM18.9998 5.2V18.8H20.9998V5.2H18.9998ZM16.7998 21H11.1998V23H16.7998V21ZM8.99985 18.8V17H6.99985V18.8H8.99985ZM11.1998 21C10.6233 21 10.251 20.9992 9.96768 20.9761C9.69602 20.9539 9.5953 20.9162 9.54586 20.891L8.63788 22.673C9.01626 22.8658 9.40947 22.9371 9.80482 22.9694C10.1885 23.0008 10.6563 23 11.1998 23V21ZM6.99985 18.8C6.99985 19.3436 6.99907 19.8114 7.03042 20.195C7.06272 20.5904 7.13403 20.9836 7.32683 21.362L9.10884 20.454C9.08365 20.4045 9.04597 20.3038 9.02377 20.0322C9.00063 19.7488 8.99985 19.3766 8.99985 18.8H6.99985ZM9.54586 20.891C9.3577 20.7951 9.20471 20.6422 9.10884 20.454L7.32683 21.362C7.61445 21.9265 8.07339 22.3854 8.63788 22.673L9.54586 20.891ZM18.9998 18.8C18.9998 19.3766 18.9991 19.7488 18.9759 20.0322C18.9537 20.3038 18.916 20.4045 18.8909 20.454L20.6729 21.362C20.8657 20.9836 20.937 20.5904 20.9693 20.195C21.0006 19.8114 20.9998 19.3436 20.9998 18.8H18.9998ZM16.7998 23C17.3434 23 17.8112 23.0008 18.1949 22.9694C18.5902 22.9371 18.9834 22.8658 19.3618 22.673L18.4538 20.891C18.4044 20.9162 18.3037 20.9539 18.032 20.9761C17.7487 20.9992 17.3764 21 16.7998 21V23ZM18.8909 20.454C18.795 20.6422 18.642 20.7951 18.4538 20.891L19.3618 22.673C19.9263 22.3854 20.3852 21.9265 20.6729 21.362L18.8909 20.454ZM16.7998 3C17.3764 3 17.7487 3.00078 18.032 3.02393C18.3037 3.04612 18.4044 3.0838 18.4538 3.10899L19.3618 1.32698C18.9834 1.13419 18.5902 1.06287 18.1949 1.03057C17.8112 0.999222 17.3434 1 16.7998 1V3ZM20.9998 5.2C20.9998 4.65645 21.0006 4.18864 20.9693 3.80497C20.937 3.40963 20.8657 3.01641 20.6729 2.63803L18.8909 3.54601C18.916 3.59545 18.9537 3.69617 18.9759 3.96784C18.9991 4.25117 18.9998 4.62345 18.9998 5.2H20.9998ZM18.4538 3.10899C18.642 3.20487 18.795 3.35785 18.8909 3.54601L20.6729 2.63803C20.3852 2.07354 19.9263 1.6146 19.3618 1.32698L18.4538 3.10899ZM8.99985 5.2C8.99985 4.62345 9.00063 4.25117 9.02377 3.96784C9.04597 3.69617 9.08365 3.59545 9.10884 3.54601L7.32683 2.63803C7.13403 3.01641 7.06272 3.40963 7.03042 3.80497C6.99907 4.18864 6.99985 4.65645 6.99985 5.2H8.99985ZM11.1998 1C10.6563 1 10.1885 0.999222 9.80482 1.03057C9.40947 1.06287 9.01626 1.13419 8.63788 1.32698L9.54586 3.10899C9.5953 3.0838 9.69602 3.04612 9.96768 3.02393C10.251 3.00078 10.6233 3 11.1998 3V1ZM9.10884 3.54601C9.20471 3.35785 9.3577 3.20487 9.54586 3.10899L8.63788 1.32698C8.07339 1.6146 7.61445 2.07354 7.32683 2.63803L9.10884 3.54601ZM2.99985 13L13.9998 13V11L2.99985 11L2.99985 13ZM4.29274 8.29289L2.42411 10.1615L3.83833 11.5757L5.70695 9.70711L4.29274 8.29289ZM2.42411 13.8385L4.29274 15.7071L5.70696 14.2929L3.83832 12.4243L2.42411 13.8385ZM2.42411 10.1615C2.23777 10.3479 2.05494 10.5296 1.91409 10.6955C1.76565 10.8704 1.60608 11.0922 1.51195 11.382L3.41406 12C3.39412 12.0614 3.37064 12.0701 3.43877 11.9899C3.51447 11.9007 3.62865 11.7854 3.83833 11.5757L2.42411 10.1615ZM3.83833 12.4243C3.62866 12.2146 3.51447 12.0993 3.43877 12.0101C3.37064 11.9299 3.39412 11.9386 3.41406 12L1.51195 12.618C1.60608 12.9078 1.76566 13.1296 1.91409 13.3045C2.05494 13.4704 2.23777 13.6521 2.42411 13.8385L3.83833 12.4243ZM1.51195 11.382C1.38143 11.7837 1.38143 12.2163 1.51195 12.618L3.41406 12V12L1.51195 11.382Z" fill="#5F6D7E" />
+                    </svg>
+
+
+                    <p className='mb-0'>Log Out</p>
+
+                  </button>
+                </h2> 
+              </div>
             </div>
+
+
+
+
+
+
           </div>
+
         </div>
       </div>
     </div>
@@ -220,33 +246,28 @@ function Hamburger() {
 
 }
 
-function IconMenu() {
-
-  const [theme, setTheme] = useState('light');
-
-  useEffect(() => {
-    if (theme === "dark") {
-      document.body.classList.add("dark")
-    } else {
-      document.body.classList.remove("dark")
-    }
-  }, [theme])
-
+function IconMenu({ setSideWidth, sidewidth, setTheme, theme }) {
   return (
-    <div className="iconMenu p-3 d-none d-md-flex flex-column align-items-center justify-content-between col-md-1  ">
+    <div className="iconMenu h-100 position-sticky top-0 p-3 d-none d-md-flex flex-column align-items-center justify-content-between col-md-1  ">
 
 
       <div className="icontop d-flex flex-column align-items-center justify-content-center gap-4">
 
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg style={{ cursor: "pointer" }} onClick={() => setSideWidth(0)} width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M25.5631 8.21429L7.00537 18.9286V12.5L19.9999 5L25.5631 8.21429Z" fill="#221F20" />
           <path d="M32.9944 12.5V16.2088L10.2197 29.3544L7.00537 27.5V24.011L29.9587 10.7555L32.9944 12.5Z" fill="#221F20" />
           <path d="M14.6153 31.8956L32.9944 21.2912V27.5L19.9999 35L14.6153 31.8956Z" fill="#221F20" />
         </svg>
 
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          style={{
+            cursor: "pointer",
+            backgroundColor: `${sidewidth === 1 ? "rgb(243, 249, 254)" : "transparent"}`,
+            padding: 10,
+          }}
+          onClick={() => setSideWidth(1)} width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_5832_103247)">
-            <path d="M22.2929 23.7071C22.6834 24.0976 23.3166 24.0976 23.7071 23.7071C24.0976 23.3166 24.0976 22.6834 23.7071 22.2929L22.2929 23.7071ZM18.1176 10.0588C18.1176 14.5096 14.5096 18.1176 10.0588 18.1176V20.1176C15.6142 20.1176 20.1176 15.6142 20.1176 10.0588H18.1176ZM10.0588 18.1176C5.60806 18.1176 2 14.5096 2 10.0588H0C0 15.6142 4.50349 20.1176 10.0588 20.1176V18.1176ZM2 10.0588C2 5.60806 5.60806 2 10.0588 2V0C4.50349 0 0 4.50349 0 10.0588H2ZM10.0588 2C14.5096 2 18.1176 5.60806 18.1176 10.0588H20.1176C20.1176 4.50349 15.6142 0 10.0588 0V2ZM15.8223 17.2365L22.2929 23.7071L23.7071 22.2929L17.2365 15.8223L15.8223 17.2365Z" fill="#5F6D7E" />
+            <path d="M22.2929 23.7071C22.6834 24.0976 23.3166 24.0976 23.7071 23.7071C24.0976 23.3166 24.0976 22.6834 23.7071 22.2929L22.2929 23.7071ZM18.1176 10.0588C18.1176 14.5096 14.5096 18.1176 10.0588 18.1176V20.1176C15.6142 20.1176 20.1176 15.6142 20.1176 10.0588H18.1176ZM10.0588 18.1176C5.60806 18.1176 2 14.5096 2 10.0588H0C0 15.6142 4.50349 20.1176 10.0588 20.1176V18.1176ZM2 10.0588C2 5.60806 5.60806 2 10.0588 2V0C4.50349 0 0 4.50349 0 10.0588H2ZM10.0588 2C14.5096 2 18.1176 5.60806 18.1176 10.0588H20.1176C20.1176 4.50349 15.6142 0 10.0588 0V2ZM15.8223 17.2365L22.2929 23.7071L23.7071 22.2929L17.2365 15.8223L15.8223 17.2365Z" fill={`${sidewidth === 1 ? "blue" : "#5F6D7E"}`} />
           </g>
           <defs>
             <clipPath id="clip0_5832_103247">
@@ -255,9 +276,15 @@ function IconMenu() {
           </defs>
         </svg>
 
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          style={{
+            cursor: "pointer",
+            backgroundColor: `${sidewidth === 2 ? "rgb(243, 249, 254)" : "transparent"}`,
+            padding: 10,
+          }} onClick={() => setSideWidth(2)} width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_5188_39445)">
-            <path d="M9 1L15 1C17.8003 1 19.2004 1 20.27 1.54497C21.2108 2.02433 21.9757 2.78924 22.455 3.73005C23 4.79961 23 6.19974 23 9V15C23 17.8003 23 19.2004 22.455 20.27C21.9757 21.2108 21.2108 21.9757 20.27 22.455C19.2004 23 17.8003 23 15 23H9M9 1C6.19974 1 4.79961 1 3.73005 1.54497C2.78924 2.02433 2.02433 2.78924 1.54497 3.73005C1 4.79961 1 6.19974 1 9L1 15C1 17.8003 1 19.2004 1.54497 20.27C2.02433 21.2108 2.78924 21.9757 3.73005 22.455C4.79961 23 6.19974 23 9 23M9 1L9 23M9 12L24 12" stroke="#437EF7" stroke-width="2" stroke-linecap="round" />
+            <path d="M9 1L15 1C17.8003 1 19.2004 1 20.27 1.54497C21.2108 2.02433 21.9757 2.78924 22.455 3.73005C23 4.79961 23 6.19974 23 9V15C23 17.8003 23 19.2004 22.455 20.27C21.9757 21.2108 21.2108 21.9757 20.27 22.455C19.2004 23 17.8003 23 15 23H9M9 1C6.19974 1 4.79961 1 3.73005 1.54497C2.78924 2.02433 2.02433 2.78924 1.54497 3.73005C1 4.79961 1 6.19974 1 9L1 15C1 17.8003 1 19.2004 1.54497 20.27C2.02433 21.2108 2.78924 21.9757 3.73005 22.455C4.79961 23 6.19974 23 9 23M9 1L9 23M9 12L24 12"
+              stroke={`${sidewidth === 2 ? "blue" : "#5F6D7E"}`} stroke-width="2" stroke-linecap="round" />
           </g>
           <defs>
             <clipPath id="clip0_5188_39445">
@@ -266,23 +293,41 @@ function IconMenu() {
           </defs>
         </svg>
 
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 10H21M9 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.0799 3 8.2V17.8C3 18.9201 3 19.4802 3.21799 19.908C3.40973 20.2843 3.71569 20.5903 4.09202 20.782C4.51984 21 5.0799 21 6.2 21H17.8C18.9201 21 19.4802 21 19.908 20.782C20.2843 20.5903 20.5903 20.2843 20.782 19.908C21 19.4802 21 18.9201 21 17.8V8.2C21 7.0799 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H15M9 5H15M9 5V4.5C9 3.67157 8.32843 3 7.5 3C6.67157 3 6 3.67157 6 4.5V5M15 5V4.5C15 3.67157 15.6716 3 16.5 3C17.3284 3 18 3.67157 18 4.5V5" stroke="#5F6D7E" stroke-width="2" stroke-linecap="round" />
+        <svg
+          style={{
+            cursor: "pointer",
+            backgroundColor: `${sidewidth === 3 ? "rgb(243, 249, 254)" : "transparent"}`,
+            padding: 10,
+            stroke: `${sidewidth === 3 ? "blue" : "transparent"}`,
+          }} onClick={() => setSideWidth(3)} width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 10H21M9 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.0799 3 8.2V17.8C3 18.9201 3 19.4802 3.21799 19.908C3.40973 20.2843 3.71569 20.5903 4.09202 20.782C4.51984 21 5.0799 21 6.2 21H17.8C18.9201 21 19.4802 21 19.908 20.782C20.2843 20.5903 20.5903 20.2843 20.782 19.908C21 19.4802 21 18.9201 21 17.8V8.2C21 7.0799 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H15M9 5H15M9 5V4.5C9 3.67157 8.32843 3 7.5 3C6.67157 3 6 3.67157 6 4.5V5M15 5V4.5C15 3.67157 15.6716 3 16.5 3C17.3284 3 18 3.67157 18 4.5V5" stroke={`${sidewidth === 3 ? "blue" : "#5F6D7E"}`} stroke-width="2" stroke-linecap="round" />
         </svg>
 
 
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M2 14C2 12.8954 2.89543 12 4 12C5.10457 12 6 12.8954 6 14V18C6 19.1046 5.10457 20 4 20C2.89543 20 2 19.1046 2 18V14Z" stroke="#5F6D7E" stroke-width="2" />
-          <path d="M10 6C10 4.89543 10.8954 4 12 4C13.1046 4 14 4.89543 14 6V18C14 19.1046 13.1046 20 12 20C10.8954 20 10 19.1046 10 18V6Z" stroke="#5F6D7E" stroke-width="2" />
-          <path d="M18 10C18 8.89543 18.8954 8 20 8C21.1046 8 22 8.89543 22 10V18C22 19.1046 21.1046 20 20 20C18.8954 20 18 19.1046 18 18V10Z" stroke="#5F6D7E" stroke-width="2" />
+        <svg
+          style={{
+            cursor: "pointer",
+            backgroundColor: `${sidewidth === 4 ? "rgb(243, 249, 254)" : "transparent"}`,
+            padding: 10,
+            stroke: `${sidewidth === 4 ? "blue" : "transparent"}`,
+          }} onClick={() => setSideWidth(4)} width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 14C2 12.8954 2.89543 12 4 12C5.10457 12 6 12.8954 6 14V18C6 19.1046 5.10457 20 4 20C2.89543 20 2 19.1046 2 18V14Z" stroke={`${sidewidth === 4 ? "blue" : "#5F6D7E"}`} stroke-width="2" />
+          <path d="M10 6C10 4.89543 10.8954 4 12 4C13.1046 4 14 4.89543 14 6V18C14 19.1046 13.1046 20 12 20C10.8954 20 10 19.1046 10 18V6Z" stroke={`${sidewidth === 4 ? "blue" : "#5F6D7E"}`} stroke-width="2" />
+          <path d="M18 10C18 8.89543 18.8954 8 20 8C21.1046 8 22 8.89543 22 10V18C22 19.1046 21.1046 20 20 20C18.8954 20 18 19.1046 18 18V10Z" stroke={`${sidewidth === 4 ? "blue" : "#5F6D7E"}`} stroke-width="2" />
         </svg>
 
 
       </div>
 
-      <div className="iconbottom d-flex flex-column align-items-center justify-content-center gap-4">
+      <div
+        style={{
+          cursor: "pointer",
+          backgroundColor: `${sidewidth === 1 ? "rgb(243, 249, 254)" : "transparent"}`,
+          padding: 10,
+          fill: `${sidewidth === 1 ? "red" : "transparent"}`,
+        }} className="iconbottom d-flex flex-column align-items-center justify-content-center gap-4">
         <button className='darkmode bg-dark p-2 rounded-5' onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>{theme === "dark" ? <img src={"../assets/img/sun.png"} /> : <img src={"../assets/img/moon.png"} />}</button>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg onClick={() => setSideWidth(5)} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M9.00033 3.7583C9.00033 2.78722 9.78755 2 10.7586 2H13.242C14.2131 2 15.0003 2.78722 15.0003 3.75831C15.0003 5.11186 16.4656 5.95781 17.6378 5.28104C18.4788 4.79548 19.5542 5.08362 20.0398 5.92462L21.2814 8.07525C21.767 8.91625 21.4788 9.99162 20.6378 10.4772C19.4656 11.154 19.4656 12.8459 20.6378 13.5227C21.4788 14.0082 21.767 15.0836 21.2814 15.9246L20.0398 18.0752C19.5542 18.9162 18.4788 19.2044 17.6378 18.7188C16.4656 18.0421 15.0003 18.8881 15.0003 20.2416C15.0003 21.2127 14.2131 22 13.242 22H10.7587C9.78757 22 9.00033 21.2127 9.00033 20.2416C9.00033 18.8881 7.53506 18.0421 6.36285 18.7188C5.52186 19.2044 4.44648 18.9162 3.96094 18.0753L2.71926 15.9246C2.23371 15.0836 2.52186 14.0082 3.36286 13.5227C4.53508 12.8459 4.53508 11.154 3.36286 10.4772C2.52186 9.99162 2.23371 8.91624 2.71926 8.07525L3.96094 5.9246C4.44649 5.08361 5.52187 4.79547 6.36286 5.28102C7.53506 5.95779 9.00033 5.11184 9.00033 3.7583Z" stroke="#5F6D7E" stroke-width="2" />
           <path d="M16.0003 12C16.0003 14.2091 14.2095 16 12.0003 16C9.79119 16 8.00033 14.2091 8.00033 12C8.00033 9.79086 9.79119 8 12.0003 8C14.2095 8 16.0003 9.79086 16.0003 12Z" stroke="#5F6D7E" stroke-width="2" />
         </svg>
@@ -298,74 +343,121 @@ function IconMenu() {
   )
 }
 
-function Sidebar() {
+function Sidebar({ setPlan, plan, sidewidth, setSideWidth }) {
 
   return (
-    <div className="sidebar d-none d-md-flex flex-column justify-content-between border-start border-end col-md-2">
+    <div className="sidebar h-100 position-sticky top-0 d-none d-md-flex flex-column justify-content-between border-start border-end col-md-2"
+      style={{
+        width: `${sidewidth === 0 ? "0px" : "310px"}`,
+        display: `${sidewidth === 0 ? "none" : "flex"}`,
+        transition: "all 1s"
+      }}>
 
 
-      <div className="sidebar-menu d-flex flex-column gap-4">
-        <button className='d-flex align-items-center gap-2 mt-3 py-2 px-4  '>
+      <div className="sidebar-menu flex-column gap-4" style={{
+        display: `${sidewidth === 0 ? "none" : "flex"}`,
+      }}>
+        <button className='d-flex align-items-center gap-2 mt-3 py-2 px-4' onClick={() => setSideWidth(0)}>
           <img src="../assets/img/Button.png" />
           Lookscout Dashboard
         </button>
         <input type="search" className='p-2 ps-5 mb-3' placeholder='Search here...' />
 
 
-        <div className="general d-flex align-items-center gap-2   ">
-          <img src="../assets/img/horizontal.png" alt="" />
-          <p className='mb-0'>General</p>
-        </div>
 
-
-
-        <div className="messages d-flex justify-content-between align-items-center gap-2   ">
-          <div className='d-flex p-0 gap-2'>
-            <img src="../assets/img/mail.png" alt="" />
-            <p className='mb-0'>Messages</p>
+        <div className="general p-0  flex-column gap-2" style={{
+          display: `${sidewidth === 2 ? "flex" : "none"}`,
+          transition: "all 1s"
+        }}>
+          <div className="general d-flex align-items-center gap-2">
+            <img src="../assets/img/horizontal.png" alt="" />
+            <p className='mb-0'>General</p>
           </div>
-          <span className='bg-primary text-white px-2 rounded-5'>6</span>
+          <div className="messages d-flex justify-content-between align-items-center gap-2   ">
+            <p className='d-flex p-0 gap-2'>
+              <img src="../assets/img/mail.png" alt="" />
+              <p className='mb-0'>Messages</p>
+            </p>
+            <span className='bg-primary text-white px-2 rounded-5'>6</span>
+          </div>
+
+          <div className="notifications d-flex align-items-center gap-2   ">
+            <img src="../assets/img/alarm.png" alt="" />
+            <p className='mb-0'>Notifications</p>
+          </div>
+
+          <div className="users d-flex align-items-center gap-2 ">
+            <img src="../assets/img/user.png" alt="" />
+            <p className='mb-0'>Users</p>
+          </div>
+
+          <div className="event d-flex align-items-center gap-2  ">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.9917 7.3377L11.7886 5.24344C11.4376 4.63238 10.557 4.62946 10.202 5.23817L8.91995 7.43592C8.65571 7.8889 8.21013 8.20704 7.6959 8.30988L6.11583 8.6259C5.40982 8.7671 5.13472 9.62976 5.62864 10.1536L6.75996 11.3535C7.18155 11.8006 7.35106 12.4293 7.21142 13.0278L6.67549 15.3246C6.49205 16.1108 7.34097 16.7331 8.0355 16.3215L10.0652 15.1187C10.6415 14.7772 11.3582 14.7772 11.9345 15.1187L13.9642 16.3215C14.6587 16.7331 15.5076 16.1108 15.3242 15.3246L14.7804 12.9943C14.6451 12.4143 14.7999 11.8048 15.1956 11.3597L16.3548 10.0556C16.8251 9.52645 16.5436 8.68656 15.8494 8.54771L14.2218 8.2222C13.7034 8.11852 13.255 7.7961 12.9917 7.3377Z" stroke="rgba(67, 126, 247, 1)" stroke-width="1.67" />
+              <path d="M21.0832 11C21.0832 16.5689 16.5687 21.0834 10.9998 21.0834C5.43097 21.0834 0.916504 16.5689 0.916504 11C0.916504 5.43115 5.43097 0.916687 10.9998 0.916687C16.5687 0.916687 21.0832 5.43115 21.0832 11Z" stroke="rgba(67, 126, 247, 1)" stroke-width="1.67" />
+            </svg>
+
+            <p className='mb-0 text-primary'>Event & Logs</p>
+          </div>
+
+          <div className="organization d-flex align-items-center gap-2   ">
+            <img src="../assets/img/organization.png" alt="" />
+            <p className='mb-0'>Organization</p>
+          </div>
+
+          <div className="teams d-flex align-items-center gap-2   ">
+            <img src="../assets/img/teams.png" alt="" />
+            <p className='mb-0'>Teams</p>
+          </div>
+
         </div>
 
-        <div className="notifications d-flex align-items-center gap-2   ">
-          <img src="../assets/img/alarm.png" alt="" />
-          <p className='mb-0'>Notifications</p>
+        <div className="view flex-column gap-4 p-0" style={{
+          display: `${sidewidth === 3 ? "flex" : "none"}`,
+          transition: "all 1s"
+        }}>
+          <div>
+            <p>Aylık Görünüm</p>
+          </div>
+          <div>
+            <p>Haftalık Görünüm</p>
+          </div>
+          <div>
+            <p>Günlük Görünüm</p>
+          </div>
+          <div>
+            <p>Etkinlikler</p>
+          </div>
         </div>
 
-        <div className="users d-flex align-items-center gap-2 ">
-          <img src="../assets/img/user.png" alt="" />
-          <p className='mb-0'>Users</p>
+
+        <div className="statistics flex-column gap-4 p-0" style={{
+          display: `${sidewidth === 4 ? "flex" : "none"}`,
+          transition: "all 1s"
+        }}>
+          <div>
+            <p>Bar Charts</p>
+          </div>
+          <div>
+            <p>Sales Data</p>
+          </div>
+          <div>
+            <p>Performance Metrics</p>
+          </div>
+
         </div>
-
-        <div className="event d-flex align-items-center gap-2  ">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12.9917 7.3377L11.7886 5.24344C11.4376 4.63238 10.557 4.62946 10.202 5.23817L8.91995 7.43592C8.65571 7.8889 8.21013 8.20704 7.6959 8.30988L6.11583 8.6259C5.40982 8.7671 5.13472 9.62976 5.62864 10.1536L6.75996 11.3535C7.18155 11.8006 7.35106 12.4293 7.21142 13.0278L6.67549 15.3246C6.49205 16.1108 7.34097 16.7331 8.0355 16.3215L10.0652 15.1187C10.6415 14.7772 11.3582 14.7772 11.9345 15.1187L13.9642 16.3215C14.6587 16.7331 15.5076 16.1108 15.3242 15.3246L14.7804 12.9943C14.6451 12.4143 14.7999 11.8048 15.1956 11.3597L16.3548 10.0556C16.8251 9.52645 16.5436 8.68656 15.8494 8.54771L14.2218 8.2222C13.7034 8.11852 13.255 7.7961 12.9917 7.3377Z" stroke="rgba(67, 126, 247, 1)" stroke-width="1.67" />
-            <path d="M21.0832 11C21.0832 16.5689 16.5687 21.0834 10.9998 21.0834C5.43097 21.0834 0.916504 16.5689 0.916504 11C0.916504 5.43115 5.43097 0.916687 10.9998 0.916687C16.5687 0.916687 21.0832 5.43115 21.0832 11Z" stroke="rgba(67, 126, 247, 1)" stroke-width="1.67" />
-          </svg>
-
-          <p className='mb-0 text-primary'>Event & Logs</p>
-        </div>
-
-        <div className="organization d-flex align-items-center gap-2   ">
-          <img src="../assets/img/organization.png" alt="" />
-          <p className='mb-0'>Organization</p>
-        </div>
-
-        <div className="teams d-flex align-items-center gap-2   ">
-          <img src="../assets/img/teams.png" alt="" />
-          <p className='mb-0'>Teams</p>
-        </div>
-
       </div>
 
 
-      <div className="sidebar-profil d-flex flex-column gap-3 m-3">
+      <div className="sidebar-profil  flex-column gap-3 m-3" style={{
+        display: `${sidewidth === 0 ? "none" : "flex"}`,
+      }}>
         <div className="profil d-flex align-items-center justify-content-between">
           <div className="profilName d-flex align-items-center gap-2">
             <img src="../assets/img/brian.png" />
             <p className='m-0'>Brian Ford</p>
           </div>
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => setPlan(0)}>
             <g filter="url(#filter0_d_5832_96935)">
               <path d="M13.6248 12.6249H14.3748M13.6248 13.3749H14.3748M6.62476 12.6249H7.37476M6.62476 13.3749H7.37476M20.6248 12.6249H21.3748M20.6248 13.3749H21.3748M15 13C15 13.5523 14.5523 14 14 14C13.4477 14 13 13.5523 13 13C13 12.4477 13.4477 12 14 12C14.5523 12 15 12.4477 15 13ZM8 13C8 13.5523 7.55229 14 7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55229 12 8 12.4477 8 13ZM22 13C22 13.5523 21.5523 14 21 14C20.4477 14 20 13.5523 20 13C20 12.4477 20.4477 12 21 12C21.5523 12 22 12.4477 22 13Z" stroke="#5F6D7E" stroke-width="2" stroke-linecap="round" />
             </g>
@@ -383,10 +475,13 @@ function Sidebar() {
             </defs>
           </svg>
         </div>
-        <div className="subsplan p-3 rounded-3">
+        <div className="subsplan p-3 rounded-3" style={{
+          display: `${plan === 1 ? "none" : "block"}`,
+          transition: "all 1s"
+        }}>
           <div className="grafikX d-flex align-items-start justify-content-between">
             <img src="../assets/img/Progresscircle.png" />
-            <img src="../assets/img/closecross.png" />
+            <img src="../assets/img/closecross.png" onClick={() => setPlan(1)} />
           </div>
           <h3 className='mt-1'>Subscription Plan</h3>
           <p>Your Subscription plan will expire soon please upgrade!</p>
