@@ -30,7 +30,7 @@ function App() {
 
         <div className="section d-flex flex-column  col-md-9 p-4 gap-4"
           style={{
-            width: `${sidewidth === 0 ? "calc(100% - 80px)" : "calc(100% - 392px)"}`,
+            width: `${sidewidth === 0 ? "calc(100% - 82px)" : "calc(100% - 390px)"}`,
             transition: "all 1s"
           }}
 
@@ -262,7 +262,7 @@ function IconMenu({ setSideWidth, sidewidth, setTheme, theme }) {
         <svg
           style={{
             cursor: "pointer",
-            backgroundColor: `${sidewidth === 1 ? "rgb(243, 249, 254)" : "transparent"}`,
+            backgroundColor: `${sidewidth === 1 ? `${theme === "dark" ? "rgba(51, 59, 72, 1)" : "rgb(243, 249, 254)"}` : "transparent"}`,
             padding: 10,
           }}
           onClick={() => setSideWidth(1)} width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -279,7 +279,7 @@ function IconMenu({ setSideWidth, sidewidth, setTheme, theme }) {
         <svg
           style={{
             cursor: "pointer",
-            backgroundColor: `${sidewidth === 2 ? "rgb(243, 249, 254)" : "transparent"}`,
+            backgroundColor: `${sidewidth === 2 ? `${theme === "dark" ? "rgba(51, 59, 72, 1)" : "rgb(243, 249, 254)"}` : "transparent"}`,
             padding: 10,
           }} onClick={() => setSideWidth(2)} width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_5188_39445)">
@@ -296,7 +296,7 @@ function IconMenu({ setSideWidth, sidewidth, setTheme, theme }) {
         <svg
           style={{
             cursor: "pointer",
-            backgroundColor: `${sidewidth === 3 ? "rgb(243, 249, 254)" : "transparent"}`,
+            backgroundColor: `${sidewidth === 3 ? `${theme === "dark" ? "rgba(51, 59, 72, 1)" : "rgb(243, 249, 254)"}` : "transparent"}`,
             padding: 10,
             stroke: `${sidewidth === 3 ? "blue" : "transparent"}`,
           }} onClick={() => setSideWidth(3)} width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -307,7 +307,7 @@ function IconMenu({ setSideWidth, sidewidth, setTheme, theme }) {
         <svg
           style={{
             cursor: "pointer",
-            backgroundColor: `${sidewidth === 4 ? "rgb(243, 249, 254)" : "transparent"}`,
+            backgroundColor: `${sidewidth === 4 ? `${theme === "dark" ? "rgba(51, 59, 72, 1)" : "rgb(243, 249, 254)"}` : "transparent"}`,
             padding: 10,
             stroke: `${sidewidth === 4 ? "blue" : "transparent"}`,
           }} onClick={() => setSideWidth(4)} width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -322,7 +322,7 @@ function IconMenu({ setSideWidth, sidewidth, setTheme, theme }) {
       <div
         style={{
           cursor: "pointer",
-          backgroundColor: `${sidewidth === 1 ? "rgb(243, 249, 254)" : "transparent"}`,
+          backgroundColor: `${sidewidth === 1 ? `${theme === "dark" ? "rgba(51, 59, 72, 1)" : "rgb(243, 249, 254)"}` : "transparent"}`,
           padding: 10,
           fill: `${sidewidth === 1 ? "red" : "transparent"}`,
         }} className="iconbottom d-flex flex-column align-items-center justify-content-center gap-4">
